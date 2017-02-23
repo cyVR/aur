@@ -1,0 +1,147 @@
+/* topdoc
+  name: Insets near Full Width Text
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-full-width-text-group">
+            <div class="m-full-width-text"></div>
+            <div class="m-inset
+                        m-inset__bottom-rule
+                        m-inset__left
+                        m-inset__portrait
+                        m-inset__170">
+                <div class="m-inset_image-container">
+                    <div class="m-inset_image
+                                m-inset_image__cover
+                                m-inset_image__decorative"></div>
+                    <img class="m-inset_image" />
+                </div>
+                <div class="m-inset_text"></div>
+                <div class="m-quote"></div>
+                <div class="m-related-links"></div>
+                <div class="m-call-to-action"></div>
+            </div>
+            <div class="m-full-width-text"></div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-full-width-text
+            .m-full-width-text
+            .m-inset
+            .m-inset__bottom-rule
+            .m-inset__left
+            .m-inset__portrait
+            .m-inset__170
+                .m-inset_image-container
+                    div.m-inset_image
+                    div.m-inset_image__cover
+                    div.m-inset_image__decorative
+                    img.m-inset_image
+                .m-inset_text
+                .m-quote
+                .m-related-links
+                .m-call-to-action
+            .m-full-width-text
+  tags:
+    - cfgov-molecules
+  notes:
+    - These are held in a full-width-text-group container to be held with
+      various full-width text blocks, insets, and tables as needed.
+*/
+
+.m-inset {
+    width: 100%;
+    clear: right;
+
+    &__bottom-rule {
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        border-bottom: 1px solid @horizontal-rule;
+    }
+
+    .m-inset_image__decorative {
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .m-inset_text {
+        margin-top: unit( 5px / @base-font-size-px, em );
+    }
+
+    .respond-to-min( @bp-sm-min, {
+        float: right;
+        width: unit( 270px / @base-font-size-px, em );
+    } );
+
+    .respond-to-max( @bp-xs-max, {
+
+        .m-inset_image {
+            .u-flexible-container_inner();
+            height: auto;
+            width: auto;
+        }
+
+        .m-inset_image__cover {
+            background-size: cover;
+        }
+
+        .m-inset_image__decorative {
+
+            // Important is necessary to override the inline height value;
+            height: 100% !important;
+            width: 100%;
+        }
+
+        .m-inset_image-container {
+            overflow: hidden;
+            .u-flexible-container();
+        }
+
+        &__portrait {
+            .m-inset_image-container {
+                padding-bottom: 75%;
+            }
+        }
+    } );
+
+    .respond-to-min( @bp-sm-min, {
+        &__image {
+            width: unit( 270px / @base-font-size-px, em );
+        }
+
+        &__left {
+            float: left;
+            clear: left;
+        }
+
+        &__170 {
+            width: 170px;
+        }
+
+        .m-call-to-action {
+            width: 100%;
+        }
+    } );
+
+    .m-call-to-action,
+    .m-related-links {
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        border-bottom: 1px solid @horizontal-rule;
+    }
+
+    .m-full-width-text,
+    .m-quote {
+        padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        padding-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        border-top: 1px solid @horizontal-rule;
+        border-bottom: 1px solid @horizontal-rule;
+        margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

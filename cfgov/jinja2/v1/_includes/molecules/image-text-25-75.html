@@ -1,0 +1,55 @@
+
+{# ==========================================================================
+
+   Image And Text 25/75
+
+   ==========================================================================
+
+   Description:
+
+   Create an image and text 25/75 molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/25-75-Image-&-Text
+
+   value:                    Object defined from a StreamField block.
+
+   value.image:              A image object containing the image to be
+                             placed adjacent to the text.
+
+   value.image.upload:       An image object.
+
+   value.image.alt:          String for alt text for screenreaders.
+
+   value.heading:            Heading of the text content.
+
+   value.body:               Body of the text content.
+
+   value.links:              A tuple of items to create a list of links, containing:
+
+   value.links[i].url:       A string for the URL of the link.
+
+   value.links[i].text:      A string for the text of the link.
+
+   value.should_link_image:  Boolean for whether the image should be wrapped in
+                              a tag.
+
+   ========================================================================== #}
+
+{% from 'molecules/info-unit.html' import info_unit with context %}
+{% if value.image.upload %}
+    {% set photo=image(value.image.upload, 'original') %}
+{% endif %}
+{% set heading = '<h3>' ~ value.heading ~ '</h3>' if value.heading else '' %}
+
+{{ info_unit( {
+    'modifier': 'inline',
+    'image': {
+        'url': photo.url if photo else '/',
+        'alt': value.image.alt,
+        'is_square': true,
+        'is_decorative': value.image.alt == ''
+    },
+    'heading': heading,
+    'body': parse_links(value.body) | safe,
+    'links': value.links,
+    'should_link_image': value.should_link_image or false
+} ) }}

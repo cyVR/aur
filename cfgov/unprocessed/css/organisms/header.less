@@ -1,0 +1,207 @@
+// TODO: Move the theme variables to cf-enhancements.
+/* topdoc
+  name: Theme variables
+  family: cf-core
+  notes:
+    - "The following color and sizing variables are exposed, allowing you to
+       easily override them before compiling."
+  patterns:
+    - name: Sizing
+      codenotes:
+        - |
+          @margin_half__em
+          @mobile_trigger_ht__px
+          @min_app_width__px
+  tags:
+    - cf-core
+*/
+
+@margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+@mobile_trigger_ht__px: 54px;
+@min_app_width__px: 320px;
+
+/* topdoc
+  name: Header
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-header">
+            <div class="wrapper">
+                <div class="m-global-header-cta"></div>
+                <div class="m-global-search"></div>
+                <a class="o-header_logo" href="/">
+                    <img class="header_logo u-js-only"
+                         src="{{ static('img/logo_sm-exec.svg')}}"
+                         onerror="this.onerror=null;this.src='{{ static('img/logo_sm-exec.png')}}';"
+                         alt="Consumer Financial Protection Bureau"
+                         width="237"
+                         height="50">
+                    <noscript>
+                        <img class="header_logo logo__no-js"
+                             src="{{ static('img/logo_sm-exec.png')}}"
+                             alt="Consumer Financial Protection Bureau"
+                             width="237"
+                             height="50">
+                    </noscript>
+                </a>
+            </div>
+            [o-mega-menu]
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-header
+            .wrapper
+              .m-global-header-cta
+              .m-global-search
+              .o-header_logo
+            .o-mega-menu
+      notes:
+        - "The `onerror` attribute allows for the usage of an SVG logo for
+           browsers that support SVG, with a fallback to PNG for browsers that
+           don't."
+        - "The `noscript` element displays the PNG fallback in the event that
+           JavaScript is not available."
+        - "The path in the `src` attribute has been adjusted for these docs."
+  tags:
+    - cfgov-organisms
+*/
+
+.o-header {
+    min-width: @min_app_width__px;
+    border-bottom: 5px solid @green;
+    position: relative;
+    z-index: 10;
+    background-color: @white;
+
+    // Tablet/mobile sizes.
+    .respond-to-max( @bp-sm-max, {
+        > .m-global-eyebrow {
+            display: none;
+        }
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        min-width: @bp-lg-min;
+    } );
+
+    &_content {
+        position: relative;
+
+        > .wrapper {
+            // TODO: Remove when Capital Framework is updated to 3.x.x.
+            //       on outdated consumerfinance.gov projects.
+            position: initial;
+
+            > .m-global-search {
+                float: right;
+
+                // Mobile size.
+                .respond-to-max( @bp-xs-max, {
+                    margin-right: -15px;
+                } );
+
+                // Tablet size.
+                .respond-to-range( @bp-sm-min, @bp-sm-max {
+                    margin-right: -30px;
+                } );
+            }
+        }
+
+        // Desktop size.
+        .respond-to-min( @bp-med-min, {
+            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+            > .wrapper {
+                > .m-global-header-cta {
+                    float: right;
+                }
+
+                > .m-global-search {
+                    min-width: 340px;
+                }
+            }
+        } );
+
+        // Tablet/mobile sizes.
+        // Hide Global Header Call to Action.
+        .respond-to-max( @bp-sm-max, {
+            > .wrapper {
+                > .m-global-header-cta {
+                    display: none;
+                }
+            }
+
+            // Set the mobile hamburger mega menu next to the logo.
+            > .o-mega-menu {
+                .js & {
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                }
+            }
+        } );
+    }
+
+    &_logo {
+
+        // Tablet/mobile sizes.
+        .respond-to-max( @bp-sm-max, {
+            .js & {
+                // Offset logo by width of mega menu trigger + 10px gap.
+                margin-left: @mobile_trigger_ht__px + ( @grid_gutter-width / 2 );
+            }
+        } );
+
+        &-img {
+            // Size is to fit 320px minimum width for older iPhones, etc.
+            height: @mobile_trigger_ht__px - 20px;
+            width: auto;
+            // Margin is to bring height to menu trigger's 60px (40 + 10 + 10).
+            margin-top: 10px;
+            margin-bottom: 10px;
+            // Removes typical inline vertical whitespace.
+            vertical-align: middle;
+
+            // Desktop size.
+            .respond-to-min( @bp-med-min, {
+                margin: 0 0 unit( 20px / @base-font-size-px, em ) 0;
+                height: 50px;
+                width: 237px;
+            } );
+        }
+
+        noscript .o-header_logo-img {
+            display: none;
+        }
+    }
+}
+
+// Display logo if JavaScript is turned off.
+.no-js noscript .o-header_logo-img {
+    display: block;
+    // TODO: Check that these settings can't be covered by `.o-header_logo-img`.
+    //       To test, turn off JavaScript. The logo PNG should look the same as the SVG.
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding-top: 10px;
+
+    .respond-to-max( @bp-sm-max, {
+        padding-left: 10px;
+    } );
+}
+
+// Move logo on print.
+.respond-to-print( {
+    .o-header_logo {
+        // Mega menu is hidden, so we need to remove logo offset.
+        margin-left: 15px !important;
+    }
+} );
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

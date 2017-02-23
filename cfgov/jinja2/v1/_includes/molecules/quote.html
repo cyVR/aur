@@ -1,0 +1,26 @@
+{# ==========================================================================
+
+   Quote
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for quote when given. Typically used in insets.:
+
+   value:          Object defined from a StreamField block.
+
+   value.body:     String with quote for the text.
+
+   value.citation: String with the author or citation of text.
+
+   ========================================================================== #}
+
+<div class="m-quote">
+    <p class="pull-quote_body">
+        {{ value.body }}
+    </p>
+    <p class="pull-quote_citation">
+        {{ value.citation }}
+    </p>
+</div>

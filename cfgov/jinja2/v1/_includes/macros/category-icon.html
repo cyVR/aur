@@ -1,0 +1,52 @@
+
+{# ==========================================================================
+
+   category_icon.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create an HTML icon when given:
+
+   category:           A document type category.
+
+   additional_classes: Extra classes you wish to add to the icon, space
+                       separated.
+
+   ========================================================================== #}
+
+{% macro render(category, additional_classes) %}
+    {% set icons = {
+        'at the cfpb': 'cf-icon-bullhorn',
+        'auto loans': 'cf-icon-buying-car',
+        'blog': 'cf-icon-speech-bubble',
+        'credit cards': 'cf-icon-credit-card',
+        'credit reporting': 'cf-icon-credit-report',
+        'data, research & reports': 'cf-icon-chart',
+        'debt collection': 'cf-icon-debt-collection',
+        'events': 'cf-icon-date',
+        'featured event': 'cf-icon-date',
+        'featured blog': 'cf-icon-speech-bubble',
+        'featured video': 'cf-icon-play-round',
+        'featured tool': 'cf-icon-settings',
+        'featured news': 'cf-icon-newspaper',
+        'featured': 'cf-icon-favorite',
+        'info for consumers': 'cf-icon-information',
+        'mortgages': 'cf-icon-mortgage',
+        'newsroom': 'cf-icon-newspaper',
+        'op-ed': 'cf-icon-contract',
+        'policy & compliance': 'cf-icon-bank-account',
+        'press release': 'cf-icon-bullhorn',
+        'report': 'cf-icon-chart',
+        'speech': 'cf-icon-microphone',
+        'student loans': 'cf-icon-paying-college',
+        'testimony': 'cf-icon-double-quote',
+      }
+    %}
+    {% set icon = icons[category | lower] %}
+    {% if icon %}
+    <span class="cf-icon {{ icon }} cf-icon__before
+                 {{ additional_classes or '' }}"></span>
+    {% endif %}
+{% endmacro %}
